@@ -93,7 +93,7 @@ class Flow:
                 return False
         return True
 
-    def compute_flow(self, index_pairs, checkpoint):
+    def compute_flow(self, index_pairs, checkpoint, visualize=False):
         """Run Flownet2 with specific <checkpoint> (FlowNet2 or finetuned on KITTI)
         Note that we don't fit homography first for FlowNet2-KITTI model.
         """
@@ -138,7 +138,7 @@ class Flow:
         args.fp16 = False
         args.homography = 'KITTI' not in checkpoint
         args.rgb_max = 255.0
-        args.visualize = False
+        args.visualize = visualize
 
         optical_flow_flownet2_homography.process(args)
 

@@ -181,6 +181,7 @@ def infer(args, Flownet, device, img1_name, img2_name):
     img1 = img1[None, :, :]
     img2 = img2[None, :, :]
     img2_reg = img2_reg[None, :, :]
+    print(img1.shape, img2.shape, img2_reg.shape)
     img1 = img1.to(device)
     img2 = img2.to(device)
     img2_reg = img2_reg.to(device)
@@ -256,7 +257,9 @@ def process(args):
             continue
 
         flow = infer(args, Flownet, device, im1, im2)
-        flow = resize_flow(flow, args.size)
+        if args.size:
+            flow = resize_flow(flow, args.size)
+        print(flow.shape)
 
         os.makedirs(os.path.dirname(out), exist_ok=True)
         save_raw_float32_image(out, flow)
